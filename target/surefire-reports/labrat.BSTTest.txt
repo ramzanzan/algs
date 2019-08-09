@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: labrat.BSTTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.024 s <<< FAILURE! - in labrat.BSTTest
+labrat.BSTTest  Time elapsed: 0.022 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void labrat.ds.bst.NaiveBST.<init>(labrat.ds.bst.NodeBST, int)'
+	at labrat.BSTTest.Init(BSTTest.java:44)
+
