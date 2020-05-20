@@ -11,16 +11,21 @@ public abstract class BinarySearchTree<T> {
     abstract void insert(T e);
     abstract void remove(T e);
 
-    public T search(T e) {
+    protected Node<T> findNode(T e){
         Node<T> parent = root;
         for(;;){
             if(parent==null) return null;
-            if(parent.value.equals(e)) return parent.value;
+            if(parent.value.equals(e)) return parent;
             if(cpr.compare(parent.value,e)<0)
                 parent = parent.right;
             else
                 parent = parent.left;
         }
+    }
+
+    public T find(T e) {
+        var n = findNode(e);
+        return n!=null ? n.value : null;
     }
 
     public T max() {

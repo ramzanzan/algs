@@ -33,26 +33,34 @@ public class NaiveBst<T> extends BinarySearchTree<T> {
 
     @Override
     public void remove(T e) {
-        //todo
-//        Node n = search(k);
-//        if(n==null) return;
-//        Node p = n.parent;
-//        if(p!=null) {
-//            if (p.right == n)
-//                p.right = n.left;
-//            else
-//                p.left = n.left;
-//        }
-//        else
-//            root = n.left;
-//        if(n.left!=null)
-//            n.left.parent = n.parent;
-//        if(n.right!=null) {
-//            n.right.parent = null;
-//            insert(n.right);
-//            --size;
-//        }
-//        --size;
+        Node<T> n = findNode(e);
+        if(n==null) return;
+
+        Node<T> p = n.parent, succ;
+        if(n.left==null){
+            succ=n.right;
+        }
+        else if(n.right==null){
+            succ=n.left;
+        }else {
+            succ=n.left;
+            Node<T> mostRight = succ;
+            while (mostRight.right!=null)
+                mostRight=mostRight.right;
+            mostRight.right=n.right;
+            n.right.parent=mostRight;
+        }
+
+        succ.parent=p;
+        if(p!=null){
+            if(p.left==n)
+                p.left=succ;
+            else
+                p.right=succ;
+        }else{
+            root=succ;
+        }
+        --size;
     }
 }
 
