@@ -2,8 +2,6 @@ package ramzanzan.structures.bst;
 
 
 /***
- * Simple path is a number of black nodes from node X to Y (inclusive X and Y)
- *
  * RBTree h <= 2log(n+1)
  *
  * Props:
@@ -14,86 +12,115 @@ package ramzanzan.structures.bst;
  * 5) all paths from node to leaves have equivalent number of black nodes
  */
 public class RedBlackTree<T> extends BinarySearchTree<T> {
-    RedBlackNode nil;
+    private RedBlackNode<T> nil = new RedBlackNode<>();
+    private RedBlackNode<T> root = nil;
+
+    public RedBlackTree(){}
 
     public RedBlackTree(int[] arr) {
-//        nil = new RedBlackNode(null, 0);
-//        nil.blackNotRed = true;
-//        root = nil;
-//        for (int e : arr)
-//            insert(e);
     }
 
-    void Rotate(Node node, boolean rightNotLeft) {
-        Node rising = rightNotLeft ? node.left : node.right;
-        if (rising == nil) throw new IllegalArgumentException("Rising node is NIL");
-        if (node.parent.left == node)
-            node.parent.left = rising;
+    private void rotateLeft(RedBlackNode<T> node) {
+        var parent = node.parent;
+        var rightChild = node.right;
+        rightChild.left=node;
+        if(root==node)
+            root=(RedBlackNode<T>)rightChild;
+        else if (parent.left == node)
+            parent.left = rightChild;
         else
-            node.parent.right = rising;
-        rising.parent = node.parent;
-        node.parent = rising;
-
-        Node central;
-        if (rightNotLeft) {
-            central = rising.right;
-            node.left = central;
-            rising.right = node;
-        } else {
-            central = rising.left;
-            node.right = central;
-            rising.left = node;
+            parent.right = rightChild;
+        rightChild.parent=parent;
+        if(rightChild.left!=nil){
+            rightChild.left.parent=node;
         }
-        if (central != nil) central.parent = node;
+        node.right=rightChild.left;
+        node.parent=rightChild;
+    }
+
+    private void rotateRight(RedBlackNode<T> node){
+        var parent = node.parent;
+        var leftChild = node.left;
+        if(root==node)
+            root=(RedBlackNode<T>)leftChild;
+        else if (parent.left == node)
+            parent.left = leftChild;
+        else
+            parent.right = leftChild;
+        leftChild.parent=parent;
+        if(leftChild.right!=nil){
+            leftChild.right.parent=node;
+        }
+        node.left=leftChild.right;
+        node.parent=leftChild;
+        leftChild.right=node;
     }
 
     @Override
     public void insert(T k) {
-//        RedBlackNode node = new RedBlackNode(null, k);
-//        Node y = nil;
-//        Node x = root;
-//        while (x != nil) {
-//            y = x;
-//            if (node.value <= x.value)
-//                x = x.left;
-//            else
-//                x = x.right;
-//        }
-//        node.parent = y;
-//        if (y == nil)
-//            root = node;
-//        else if (node.value <= y.value)
-//            y.left = node;
-//        else
-//            y.right = node;
-//        node.left = nil;
-//        node.right = nil;
-//        node.blackNotRed = false;
-//        FixTree(node);
-//        ++size;
+        var n = new RedBlackNode<T>(k);
+        var y = nil;
+        var x = root;
+        while (x!=nil) {
+            y = x;
+            if (cpr.compare(k,x.value) < 0)
+                x = (RedBlackNode<T>) x.left;
+            else
+                x = (RedBlackNode<T>) x.right;
+        }
+        if(y==nil)
+            root=n;
+        else if(cpr.compare(k,y.value)<0)
+            y.left=n;
+        else
+            y.right=n;
+        n.parent=y;
+        n.left=nil;
+        n.right=nil;
+        n.blackNotRed=false;
+        size++;
+        fixUp(n);
     }
 
-    void FixTree(RedBlackNode node) {
-//        while (!node.getParent().blackNotRed) {
-////            if(node.parent==node.parent.parent.left){
-//            boolean dir = node.parent == node.parent.parent.left;
-//            RedBlackNode y = node.getParent().getParent().getRight();
-//            if (!y.blackNotRed) {
-//                node.getParent().blackNotRed = true;
-//                y.blackNotRed = true;
-//                node.getParent().getParent().blackNotRed = false;
-//                node = node.getParent().getParent();
-//            } else {
-//                if (node == node.parent.right) {
-//                    node = node.getParent();
-//                    Rotate(node, !dir);
-//                }
-//                node.getParent().blackNotRed = true;
-//                node.getParent().getParent().blackNotRed = false;
-//                Rotate(node.getParent().getParent(), dir);
-//            }
-//        }
-//        ((RedBlackNode) root).blackNotRed = true;
+    private void fixUp(RedBlackNode<T> z) {
+        while (!z.getParent().blackNotRed){
+            if(z.parent==z.parent.parent.left){
+                var y = z.getParent().getParent().getRight();
+                if(!y.blackNotRed){
+                    z.getParent().blackNotRed=true;
+                    y.blackNotRed=true;
+                    z.getParent().getParent().blackNotRed=false;
+                    z=z.getParent().getParent();
+                }
+                else{
+                    if(z==z.parent.right) {
+                        z=z.getParent();
+                        rotateLeft(z);
+                    }
+                    z.getParent().blackNotRed=true;
+                    z.getParent().getParent().blackNotRed=false;
+                    rotateRight(z.getParent().getParent());
+                }
+            }else {
+                var y = z.getParent().getParent().getLeft();
+                if(!y.blackNotRed){
+                    z.getParent().blackNotRed=true;
+                    y.blackNotRed=true;
+                    z.getParent().getParent().blackNotRed=false;
+                    z=z.getParent().getParent();
+                }
+                else{
+                    if(z==z.parent.left) {
+                        z=z.getParent();
+                        rotateRight(z);
+                    }
+                    z.getParent().blackNotRed=true;
+                    z.getParent().getParent().blackNotRed=false;
+                    rotateLeft(z.getParent().getParent());
+                }
+            }
+        }
+        root.blackNotRed=true;
     }
 
     @Override

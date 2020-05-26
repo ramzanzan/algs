@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CutRod {
+public class kormen_15_1_cutRod {
 
     static final Map<Integer,Integer> PRICES = new HashMap<>();
     static {
@@ -25,12 +25,12 @@ public class CutRod {
     Map<Integer,Integer> prices;
     int rodLen;
 
-    public CutRod(Map<Integer,Integer> prices,int rodLen){
+    public kormen_15_1_cutRod(Map<Integer,Integer> prices, int rodLen){
         this.prices = prices;
         this.rodLen=rodLen;
     }
 
-    public CutRod(int rodLen){
+    public kormen_15_1_cutRod(int rodLen){
         this.prices=PRICES;
         this.rodLen=rodLen;
     }
