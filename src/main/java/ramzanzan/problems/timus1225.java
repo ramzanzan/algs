@@ -24,3 +24,5 @@ public class timus1225 {
         System.out.println(sum*2);
     }
 }
+
+
