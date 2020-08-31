@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: labrat.CountingSortTests
--------------------------------------------------------------------------------
-Tests run: 1000, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.694 s - in labrat.CountingSortTests

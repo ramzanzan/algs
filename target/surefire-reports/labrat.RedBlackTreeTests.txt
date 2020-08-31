@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: labrat.RedBlackTreeTests
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 3, Time elapsed: 0 s - in labrat.RedBlackTreeTests
