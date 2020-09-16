@@ -5,22 +5,25 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class timus1880 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+//        Scanner sc = new Scanner(System.in);
+        FastReader fr = new FastReader();
         int k = 3;
         int[] p = new int[k];
         int[][] ns = new int[k][];
         for(int i=0;i<k;i++){
-            int n=sc.nextInt();
-            sc.nextLine();
+//            int n=sc.nextInt();
+            int n=fr.nextInt();
+//            String r = fr.readLine();
             ns[i] = new int[n];
             for(int j=0;j<n;j++)
-                ns[i][j]=sc.nextInt();
-            sc.nextLine();
+//                ns[i][j]=sc.nextInt();
+                ns[i][j]=fr.nextInt();
+//            sc.nextLine();
         }
         int res=0;
         try {
-            int num=-1, tmp;
+            int num=-1;
             while (true){
                 for(int i=0;i<k;i++){
                     if(i==0){
@@ -37,7 +40,7 @@ public class timus1880 {
         System.out.print(res);
     }
 
-    class FastReader {
+    static class FastReader {
         final private int BUFFER_SIZE = 1 << 16;
         private DataInputStream din;
         private byte[] buffer;
