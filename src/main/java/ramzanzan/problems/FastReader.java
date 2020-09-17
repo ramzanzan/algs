@@ -109,11 +109,4 @@ public class FastReader
             fillBuffer();
         return buffer[bufferPointer++];
     }
-
-    public void close() throws IOException
-    {
-        if (din == null)
-            return;
-        din.close();
-    }
 }

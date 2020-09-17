@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.*;
 import java.util.Scanner;
 
-public class timus1000 {
+public class timus1100 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
